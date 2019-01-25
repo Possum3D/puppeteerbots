@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "axios": "^0.18.0",
+    "puppeteer": "^1.11.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "tough-cookie": "^3.0.0",
+    "url-parse": "^1.4.4",
+    "yargs": "^12.0.5"
+  }
+}
