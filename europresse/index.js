@@ -6,28 +6,43 @@ const Convertor = require('./convert.js');
 const PUrl = require('url-parse');
 const Download = require('./download.js');
 const Login = require('../europresse/login.js');
-const TARGETS = require('./targets.js');
+const Targets = require('./targets.js');
 const Argv = require('yargs').argv;
 
 const targetFolder = 'papers';
 
 let paper = ''
+let papers = []
 if (typeof Argv.paper !== 'undefined') {
-    paper = Argv.paper;
-    console.log(`fetching last edition of ${paper}`)
+    papers = [Argv.paper];
 } else {
-    console.log(`you need to indicate --paper`)
-    return
+    papers = Targets.targets.filter(target => {
+        return target.subscribed == true && target.wanted == true
+    }).map(target => {
+        return target.code
+    })
 }
 
 (async () => {
+    console.log(`${papers}`)
+    for (const paper of papers) {
+        await fetchLatest(paper)
+    }
+})()
+
+async function test() {
+    return new Promise(resolve => setTimeout(resolve, 2000));
+}
+
+async function fetchLatest(paper) {
     // Parse json-serialized cookies, retrieved via fs.
-    let store = JSON.parse(Fs.readFileSync("./authCookies.json"));
+    const cookieFile = `./authCookies.json`
+    let store = JSON.parse(Fs.readFileSync(cookieFile));
     if (parseInt(Date.now() - store.timestamp) / 1000  >  900) {
         const pastLogin = (new Date(1548408748966)).toISOString()
         console.log(`last login is too old (${pastLogin})`)
         store = await Login.authCookies()
-        Fs.writeFileSync('authCookies.json', JSON.stringify(store))
+        Fs.writeFileSync(cookieFile, JSON.stringify(store))
     }
     const cks = store.cookies
 
@@ -68,8 +83,10 @@ if (typeof Argv.paper !== 'undefined') {
     const finalFilename = `${date}_${paper}.pdf`
 
     if (Fs.existsSync(`${dir}/${finalFilename}`)) {
-        console.log(`${dir}/${finalFilename} already exists.`)
-        return
+        return new Promise((resolve) => {
+            console.log(`${dir}/${finalFilename} already exists.`)
+            resolve()
+        })
     }
 
     Fs.mkdirSync(`${dir}`, {recursive: true});
@@ -102,4 +119,9 @@ if (typeof Argv.paper !== 'undefined') {
         console.log(`created ${dir}/${finalFilename}.`)
     }
     await Convertor.convert(`${dir}`, `${date}_${paper}.pdf`)
-})();
+
+    return new Promise((resolve) => {
+        console.log(`fetched.`)
+        resolve()
+    })
+};

@@ -2,6 +2,7 @@ const Puppeteer = require('puppeteer');
 const Fs = require("fs");
 const Assert = require('assert');
 
+
 (async () => {
     const browser = await Puppeteer.launch({
         // for debugging, opening a chrome instance is better
