@@ -6,12 +6,16 @@ const Assert = require('assert');
 async function authCookies () {
     console.log('started to log in...')
     const browser = await Puppeteer.launch({
-        headless: false
+        headless: true
     });
 
     const context = await browser.createIncognitoBrowserContext();
     const page = await context.newPage();
-    let store = {} 
+    let store = {
+        cookies: [],
+        timestamp: 0
+    }
+
     try {
         const CREDS = require('./creds');
         const SUBSCRIBER_SELECTOR = '#formlexisauth > div:nth-child(1) > div.medium-4.columns > input[type="text"]';

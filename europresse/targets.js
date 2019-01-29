@@ -72,7 +72,7 @@ module.exports = {
             name: "immo hebdo",
             code: "IMH",
             subscribed: true,
-            wanted: true,
+            wanted: false,
             comments: "immo pour pi"
         },
         {
@@ -86,14 +86,14 @@ module.exports = {
             name: "Droit et patrimoine",
             code: "KDS",
             subscribed: true,
-            wanted: true,
+            wanted: false,
             comments: "immo pour pi"
         },
         {
             name: "Investissement conseil",
             code: "GQ",
             subscribed: true,
-            wanted: true,
+            wanted: false,
             comments: "immo pour pi"
         },
         {
@@ -101,28 +101,28 @@ module.exports = {
             code: "UAT",
             subscribed: true,
             wanted: true,
-            comments: "immo pour pi"
+            comments: "devops"
         },
         {
             name: "Journal des communes",
             code: "VJ",
             subscribed: true,
-            wanted: true,
+            wanted: false,
             comments: "immo pour pi"
         },
         {
             name: "La lettre des juristes d'affaire",
             code: "KLE",
             subscribed: true,
-            wanted: true,
-            comments: "immo pour pi"
+            wanted: false,
+            comments: "droit pour pi"
         },
         {
             name: "le journal de la marine marchande",
             code: "KJM",
             subscribed: true,
             wanted: true,
-            comments: "immo pour pi"
+            comments: "decouverte des infos de la marine marchande"
         }
     ]
 }
